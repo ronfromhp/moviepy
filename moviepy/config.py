@@ -1,4 +1,4 @@
-##WHAT THE ACTUAL FF
+##WHAT IN the goddamn fuck is this
 
 """Third party programs configuration for MoviePy."""
 
