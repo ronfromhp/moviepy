@@ -1,5 +1,3 @@
-##WHAT IN the goddamn fuck is this
-
 """Third party programs configuration for MoviePy."""
 
 import os
@@ -21,7 +19,7 @@ except ImportError:
     DOTENV = None
 
 FFMPEG_BINARY = os.getenv("FFMPEG_BINARY", "ffmpeg-imageio")
-IMAGEMAGICK_BINARY = f"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe"
+IMAGEMAGICK_BINARY = os.getenv("IMAGEMAGICK_BINARY", "auto-detect")
 
 IS_POSIX_OS = os.name == "posix"
 
