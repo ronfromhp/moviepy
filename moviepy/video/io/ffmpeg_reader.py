@@ -503,7 +503,7 @@ class FFmpegInfosParser:
 
                 if self._current_stream["stream_type"] == "video":
                     field, value = self.video_metadata_type_casting(field, value)
-                    if field == "rotate":
+                    if field == "displaymatrix":
                         self.result["video_rotation"] = value
 
                 # multiline metadata value parsing
@@ -722,6 +722,13 @@ class FFmpegInfosParser:
                 )
                 % (self.filename, self.infos)
             )
+            
+    def parse_rotation(self, line):
+        """Parses rotation information from the side data."""
+        match = re.search(r"rotation of (-?\d+\.?\d*) degrees", line)
+        if match:
+            return float(match.group(1))
+        return None
 
     def parse_metadata_field_value(
         self,
@@ -735,8 +742,8 @@ class FFmpegInfosParser:
 
     def video_metadata_type_casting(self, field, value):
         """Cast needed video metadata fields to other types than the default str."""
-        if field == "rotate":
-            return (field, float(value))
+        if field == "displaymatrix":
+            return (field, self.parse_rotation(value))
         return (field, value)
 
 
