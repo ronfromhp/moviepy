@@ -4,7 +4,7 @@ from moviepy.decorators import requires_duration
 
 
 @requires_duration
-def fadeout(clip, duration, final_color=None):
+def fadeout(clip, duration, final_color=None, curve=lambda t: t):
     """Makes the clip progressively fade to some color (black by default),
     over ``duration`` seconds at the end of the clip. Can be used for masks too,
     where the final color must be a number between 0 and 1.
@@ -21,7 +21,7 @@ def fadeout(clip, duration, final_color=None):
         if (clip.duration - t) >= duration:
             return get_frame(t)
         else:
-            fading = 1.0 * (clip.duration - t) / duration
+            fading = curve((clip.duration - t) / duration)
             return fading * get_frame(t) + (1 - fading) * final_color
 
     return clip.transform(filter)

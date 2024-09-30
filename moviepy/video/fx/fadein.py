@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def fadein(clip, duration, initial_color=None):
+def fadein(clip, duration, initial_color=None, curve=lambda t: t):
     """Makes the clip progressively appear from some color (black by default),
     over ``duration`` seconds at the beginning of the clip. Can be used for
     masks too, where the initial color must be a number between 0 and 1.
@@ -18,7 +18,7 @@ def fadein(clip, duration, initial_color=None):
         if t >= duration:
             return get_frame(t)
         else:
-            fading = 1.0 * t / duration
+            fading = curve(t / duration)
             return fading * get_frame(t) + (1 - fading) * initial_color
 
     return clip.transform(filter)
